@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TesterAPI;
 
@@ -10,9 +11,10 @@ using TesterAPI;
 namespace TesterAPI.Migrations
 {
     [DbContext(typeof(QAContext))]
-    partial class QAContextModelSnapshot : ModelSnapshot
+    [Migration("20220121093727_Added image field to Case model")]
+    partial class AddedimagefieldtoCasemodel
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "6.0.1");
