@@ -48,5 +48,18 @@ app.MapPost("/api/cases", async (QAContext db, Case @case) =>
 app.MapGet("/api/tasks", async (QAContext db) => await db.Tasks.ToListAsync());
 app.MapGet("/api/tasks/{id}", async (QAContext db, int id) => await db.Tasks.Include(e => e.Case).FirstOrDefaultAsync(e => e.Id == id));
 
+/* USERS */
+app.MapPost("/api/login", async (QAContext db, User user) =>
+{
+    var userToLogin = await db.Users.SingleOrDefaultAsync(u => u.Email.ToLower() == user.Email.ToLower() && u.Password == user.Password);
+    if (userToLogin != null)
+    {
+        return Results.Ok(userToLogin);
+    }
+    else
+    {
+        return Results.NoContent();
+    }
+});
 
 app.Run();
