@@ -5,7 +5,6 @@ using TesterAPI;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Set Content Root - Fortæller at den bruge wwwroot mappen, som roden til sit content
 builder.Host.UseContentRoot(Directory.GetCurrentDirectory());
 
 builder.Services.AddCors();
@@ -22,6 +21,8 @@ var app = builder.Build();
 // HTTPS Redirection
 app.UseHttpsRedirection();
 
+app.UseStaticFiles();
+
 // Cors
 app.UseCors(options =>
 {
@@ -29,9 +30,6 @@ app.UseCors(options =>
            .AllowAnyMethod()
            .AllowAnyOrigin();
 });
-// Static Files
-app.UseStaticFiles();
-
 
 /* CASES */
 app.MapGet("/api/cases", async (QAContext db) => await db.Cases.ToListAsync());
@@ -41,7 +39,7 @@ app.MapPost("/api/cases", async (QAContext db, Case @case) =>
     await db.Cases.AddAsync(@case);
     await db.SaveChangesAsync();
 
-    return Results.Ok();
+    return Results.Ok(@case);
 });
 
 /* TASKS */
